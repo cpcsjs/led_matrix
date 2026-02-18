@@ -1,32 +1,34 @@
 #include "display.h"
+#include <string.h>
 
-static uint8_t fb[DISPLAY_WIDTH];
-
-extern void hal_draw_buffer(uint8_t *buf);
+static uint8_t front_buffer[DISPLAY_WIDTH][DISPLAY_HEIGHT];
+static uint8_t back_buffer[DISPLAY_WIDTH][DISPLAY_HEIGHT];
 
 void display_init(void)
 {
-    display_clear();
+    memset(front_buffer, 0, sizeof(front_buffer));
+    memset(back_buffer, 0, sizeof(back_buffer));
 }
 
 void display_clear(void)
 {
-    for (int i = 0; i < DISPLAY_WIDTH; i++)
-        fb[i] = 0;
+    memset(back_buffer, 0, sizeof(back_buffer));
 }
 
-void display_set_pixel(int x, int y, int val)
+void display_set_pixel(int x, int y, uint8_t v)
 {
     if (x < 0 || x >= DISPLAY_WIDTH) return;
     if (y < 0 || y >= DISPLAY_HEIGHT) return;
 
-    if (val)
-        fb[x] |=  (1 << y);
-    else
-        fb[x] &= ~(1 << y);
+    back_buffer[x][y] = v;
 }
 
-void display_flush(void)
+void display_swap(void)
 {
-    hal_draw_buffer(fb);
+    memcpy(front_buffer, back_buffer, sizeof(front_buffer));
+}
+
+uint8_t (*display_get_front(void))[DISPLAY_HEIGHT]
+{
+    return front_buffer;
 }
