@@ -26,31 +26,16 @@ int main(void)
 
     while (running)
     {
-        /* ---- SDL event pump ---- */
-        while (SDL_PollEvent(&e))
-        {
-            if (e.type == SDL_QUIT)
-                running = 0;
-        }
+       display_clear();
 
-        /* ---- logic layer ---- */
-        display_clear();
+       anim_update();       // วาดลง back buffer
 
-        for (int x = 0; x < DISPLAY_WIDTH; x++)
-        {
-            int y = (x + offset) % DISPLAY_HEIGHT;
-            display_set_pixel(x, y, 1);
-        }
+       display_swap();      // เตรียม frame ใหม่
 
-        offset++;
+       display_flush();     // HAL ส่งออก
 
-        /* ---- render ---- */
-        display_flush();
-
-        /* ---- timing ---- */
-        hal_delay(30);   // ~33 FPS
-    }
-
+       hal_delay(16);       // ~60 FPS
+     }
     SDL_Quit();
     return 0;
 }
