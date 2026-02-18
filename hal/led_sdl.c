@@ -55,3 +55,16 @@ void hal_delay(int ms)
 {
     SDL_Delay(ms);
 }
+
+uint8_t (*fb)[DISPLAY_HEIGHT] = display_get_front();
+
+for (int x = 0; x < DISPLAY_WIDTH; x++)
+{
+    for (int y = 0; y < DISPLAY_HEIGHT; y++)
+    {
+        if (fb[x][y])
+        {
+            // วาด pixel
+        }
+    }
+}
