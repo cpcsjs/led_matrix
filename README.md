@@ -21,3 +21,4 @@ hal/led_sdl.c \
 -L$PREFIX/lib \
 -lSDL2 \
 -o app
+SSH enabled ✅
