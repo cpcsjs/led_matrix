@@ -1,6 +1,7 @@
 #include <SDL2/SDL.h>
 #include "led_sdl.h"
 #include <stdint.h>
+#include "../display/display.h"
 
 #define SCALE 5
 
