@@ -1,6 +1,7 @@
 #include "display/display.h"
 #include <SDL2/SDL.h>
 #include <signal.h>
+#include "display/anim.h"
 
 extern void hal_init(int w, int h);
 extern void hal_delay(int ms);
